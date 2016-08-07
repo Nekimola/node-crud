@@ -1,30 +1,20 @@
-var express = require('express');
-var jwt = require('jsonwebtoken');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-
-    res.end('AUTHORIZED!');
-});
-
-router.get('/login', function(req, res, next) {
-    res.render('./login');
-});
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const jwtMidlware = require('express-jwt');
+const router = express.Router();
 
 router.post('/login', function(req, res, next) {
-    res.render('./login', {
-        name: req.body.name,
-        pass: req.body.password,
-        token: jwt.sign({ name: req.body.name }, 'asdasdjlksadnh')
+    res.json({
+        token: jwt.sign({ name: req.body.name }, 'yep')
     });
 });
 
-router.post('/logout', function(req, res, next) {
-    var token = req.body.token;
+router.post('/logout', jwtMidlware({secret: 'yep', requestProperty: 'token'}), function(req, res, next) {
+    const token = req.headers.authorization.split(' ')[1];
+    const userInfo = jwt.verify(token, 'yep');
 
     res.json({
-        token: token
+        user: userInfo
     });
 });
 
