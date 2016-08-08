@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const tokenValidator = require('./token-validator');
 
 const config = require('./config');
 
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator({
     customValidators: config.customValidators
 }));
+app.use(tokenValidator);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

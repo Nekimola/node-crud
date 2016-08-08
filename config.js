@@ -1,4 +1,8 @@
 module.exports = {
+    tokenSecret: 'yep',
+
+    privateUrls: ['/auth/logout', '/user', '/users/import', '/users/export'],
+
     customValidators: {
         checkRole: function(value) {
             return ['admin', 'operator', 'user'].indexOf(value) !== -1;

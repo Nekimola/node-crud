@@ -15,6 +15,10 @@ module.exports = new Promise(resolve => {
                 });
             }
 
+            if (db.getCollection('logout') === null ) {
+                db.addCollection('logout');
+            }
+
             resolve(db);
         }
     });
